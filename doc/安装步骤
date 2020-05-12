@@ -1,0 +1,32 @@
+安装
+一、运维：
+1.php7需要安装xhprof扩展
+2.php5.6需要安装uprofiler
+3.需要安装filebeat，收集到性能分析redis中
+
+二、开发：
+1.代码安装
+在composer.json中增加以下代码：
+{
+    "repositories": [
+       {
+           "type": "vcs",
+           "url": "https://github.com/tianqiaoshun/Profile.git"
+       }
+    ],
+    "require": {
+        "globalegrow/php-profile": "^1.0"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "secure-http":false
+    }
+}
+2.检查是否生成性能文件，保存在dirname(ini_get('error_log')) . '/profile.dat'
+3. 在入口文件中添加
+   require __DIR__ . '/../vendor/composer/autoload.php';
+   (new PhpProfile($site, $isDebug))->start();
+   //$site为站点编码
+  //$isDebug是否为调试环境
